@@ -1,0 +1,7 @@
+<%= form_for @todo do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  <%= f.label :is_done %>
+  <%= f.select :is_done, [['Yes', true], ['No', false]], prompt: 'Select status' %>
+  <%= f.submit "Create Todo" %>
+<% end %>

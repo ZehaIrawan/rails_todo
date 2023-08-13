@@ -1,8 +1,14 @@
 <h1>Todos</h1>
-<ul>
+<ul style="display:flex;flex-direction:column;gap:12px">
   <% @todos.each do |todo| %>
-    <li><%= todo.title %></li>
+    <li  style="display:flex;gap:1rem">
+      <%= todo.title %>
+      <%= button_to "x", todo_path(todo), method: :delete %>
+    </li>
   <% end %>
 </ul>
+
+<%= render 'shared/todo_form' %>
+
 <%= link_to 'Home', root_path %>
 <%= link_to 'Create todo', new_todo_path %>

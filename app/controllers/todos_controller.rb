@@ -1,6 +1,11 @@
 class TodosController < ApplicationController
   def index
     @todos = current_user.todos.all
+    @todo = current_user.todos.new
+  end
+
+  def show
+    @todo = current_user.todos.find(params[:id])
   end
 
   def new
@@ -19,6 +24,15 @@ class TodosController < ApplicationController
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @todo.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def destroy
+    @todo = current_user.todos.find(params[:id])
+    @todo.destroy
+    respond_to do |format|
+      format.html { redirect_to todos_url, notice: "Todo was successfully destroyed." }
+      format.json { head :no_content }
     end
   end
 
