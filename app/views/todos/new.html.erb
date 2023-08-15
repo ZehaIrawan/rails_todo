@@ -1,3 +1,5 @@
 <h1>Add todo</h1>
-<%= render 'shared/todo_form' %>
+<%= turbo_frame_tag "todo_form" do %>
+  <%= render 'shared/todo_form' %>
+<% end %>
 <%= link_to 'Back', todos_path %>
