@@ -1,1 +1,5 @@
-<%= @todo.title %>
+
+<div  style="display:flex;gap:1rem">
+  <%= @todo.title %>
+  <%= button_to "x", todo_path(todo), method: :delete %>
+</div>
