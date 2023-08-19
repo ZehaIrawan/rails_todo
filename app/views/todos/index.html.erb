@@ -1,20 +1,15 @@
 <h1>Todos</h1>
-
 <ul style="display:flex;flex-direction:column;gap:12px">
   <%= turbo_frame_tag "todos_table" do %>
     <% @todos.each do |todo| %>
-      <li  style="display:flex;gap:1rem">
-        <%= todo.title %>
+      <li  style="display:flex;gap:1rem;align-items:center">
+        <p  class="<%= todo.is_done ? 'done' : '' %>"><%= todo.title %></p>
         <%= button_to "x", todo_path(todo), method: :delete %>
       </li>
     <% end %>
   <% end %>
 </ul>
-
-
 <%#= render 'shared/todo_form' %>
 <%= turbo_frame_tag "todo_form", src: new_todo_path %>
-
-
 <%= link_to 'Home', root_path %>
 <%= link_to 'Create todo', new_todo_path %>
