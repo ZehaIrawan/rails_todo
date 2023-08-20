@@ -28,6 +28,16 @@ class TodosController < ApplicationController
     end
   end
 
+  def update
+    @todo = current_user.todos.find(params[:id])
+
+    if @todo.update(todo_params)
+      redirect_to todos_path, notice: "Todo was successfully updated."
+    else
+      render :index, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     @todo = current_user.todos.find(params[:id])
     @todo.destroy

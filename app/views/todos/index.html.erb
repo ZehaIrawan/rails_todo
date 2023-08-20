@@ -3,7 +3,10 @@
   <%= turbo_frame_tag "todos_table" do %>
     <% @todos.each do |todo| %>
       <li  style="display:flex;gap:1rem;align-items:center">
-        <input type="checkbox" <%= todo.is_done ? 'checked' : '' %> >
+        <%= form_for todo, remote: true do |f| %>
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+          <%= f.check_box :is_done, class: 'todo-checkbox', checked: todo.is_done, onchange: 'this.form.submit();' %>
+        <% end %>
         <p  class="<%= todo.is_done ? 'done' : '' %>"><%= todo.title %></p>
         <%= button_to "x", todo_path(todo), method: :delete %>
       </li>
