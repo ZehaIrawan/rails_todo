@@ -19,8 +19,8 @@ class TodosController < ApplicationController
     respond_to do |format|
       if @todo.save
         format.turbo_stream
-        format.html { redirect_to todo_url(@todo), notice: "todo was successfully created." }
-        format.json { render :show, status: :created, location: @todo }
+        # format.html { redirect_to todo_url(@todo), notice: "todo was successfully created." }
+        # format.json { render :show, status: :created, location: @todo }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @todo.errors, status: :unprocessable_entity }
@@ -29,12 +29,25 @@ class TodosController < ApplicationController
   end
 
   def update
-    @todo = current_user.todos.find(params[:id])
+    #     @todo = current_user.todos.find(params[:id])
 
-    if @todo.update(todo_params)
-      redirect_to todos_path, notice: "Todo was successfully updated."
-    else
-      render :index, status: :unprocessable_entity
+    #   puts "#{@todo.inspect} is an important task."
+    #  respond_to do |format|
+    #    if @todo.update(todo_params)
+    #     format.turbo_stream { turbo_stream.replace(@todo) }
+    #     else
+    #       render :index, status: :unprocessable_entity
+    #     end
+    #   end
+    @todo = current_user.todos.find(params[:id])
+    @todo.update(todo_params)
+    respond_to do |format|
+      if @todo.update(todo_params)
+        format.turbo_stream { turbo_stream.replace(@todo) }
+        format.html { redirect_to todos_url, notice: "Todo was successfully updated." }
+      else
+        render :index, status: :unprocessable_entity
+      end
     end
   end
 
