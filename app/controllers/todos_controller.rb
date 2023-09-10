@@ -3,7 +3,7 @@ class TodosController < ApplicationController
 
   def index
     @todos = current_user.todos.all
-    @todo = current_user.todos.new
+    @new_todo = current_user.todos.new
   end
 
   def show

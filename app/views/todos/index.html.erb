@@ -1,25 +1,11 @@
 <h1>Todos</h1>
 <ul style="display:flex;flex-direction:column;gap:12px">
   <%= turbo_frame_tag "todos" do %>
-    <% @todos.each do |todo| %>
-      <li  style="display:flex;gap:1rem;align-items:center">
-        <%= form_for todo, remote: true do |f| %>
-        <%# remote: true is really just telling the browser to not refresh the page. Do the action that you would normally do, but don't do anything to the page %>
-          <%= f.check_box :is_done, class: 'todo-checkbox', checked: todo.is_done, onchange: 'this.form.submit();' %>
-          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-        <% end %>
-        <p  class="<%= todo.is_done ? 'done' : '' %>"><%= todo.title %></p>
-          <%= button_to "Delete", todo_path(todo), method: :delete, form: { class: :link, data: { turbo_confirm: "Are you sure?" } } %>
-
-      </li>
-    <% end %>
+    <%= render @todos %>
   <% end %>
 </ul>
-
-<%= form_for @todo do |f| %>
-  <%= f.text_field :title, placeholder:"Add Task" %>
-  <%= f.submit "Create Todo" %>
+<%= form_with model: @new_todo, data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" }, class: "form" do |form| %>
+  <%= form.text_field :title, placeholder:"Add Task" %>
+  <%= form.submit "Create Todo" %>
 <% end %>
-
 <%= link_to 'Home', root_path %>
-
