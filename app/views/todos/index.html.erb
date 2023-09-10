@@ -1,6 +1,6 @@
 <h1>Todos</h1>
 <ul style="display:flex;flex-direction:column;gap:12px">
-  <%= turbo_frame_tag "todos_table" do %>
+  <%= turbo_frame_tag "todos" do %>
     <% @todos.each do |todo| %>
       <li  style="display:flex;gap:1rem;align-items:center">
         <%= form_for todo, remote: true do |f| %>
@@ -9,12 +9,17 @@
           <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
         <% end %>
         <p  class="<%= todo.is_done ? 'done' : '' %>"><%= todo.title %></p>
-        <%= button_to "x", todo_path(todo), method: :delete %>
+          <%= button_to "Delete", todo_path(todo), method: :delete, form: { class: :link, data: { turbo_confirm: "Are you sure?" } } %>
+
       </li>
     <% end %>
   <% end %>
 </ul>
-<%#= render 'shared/todo_form' %>
-<%= turbo_frame_tag "todo_form", src: new_todo_path %>
+
+<%= form_for @todo do |f| %>
+  <%= f.text_field :title, placeholder:"Add Task" %>
+  <%= f.submit "Create Todo" %>
+<% end %>
+
 <%= link_to 'Home', root_path %>
-<%= link_to 'Create todo', new_todo_path %>
+

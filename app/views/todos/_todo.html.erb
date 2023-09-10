@@ -5,5 +5,5 @@
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <% end %>
   <%= @todo.title %>
-  <%= button_to "x", todo_path(todo), method: :delete %>
+  <%= button_to "Delete", todo_path(todo), method: :delete, form: { class: :link, data: { turbo_confirm: "Are you sure?" } } %>
 </div>
