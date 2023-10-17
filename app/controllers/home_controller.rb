@@ -1,5 +1,8 @@
 class HomeController < ApplicationController
   def index
-    render
+    if(current_user)
+      @todos = current_user.todos.all
+      @new_todo = current_user.todos.new
+    end
   end
 end
